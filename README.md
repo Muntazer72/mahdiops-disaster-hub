@@ -18,7 +18,7 @@ A rapid-response emergency humanitarian logistics and ground coordination platfo
 2. **Snowflake CoCo Data (Infrastructure & Mock Queries):**
    - Integrates structured regional baseline data and topographical metrics simulating Snowflake marketplace queries to map crisis areas against baseline city infrastructure.
 
-3. **Solans Agent Registry (Onchain Identity Simulation):**
+3. **Solana Agent Registry (Onchain Identity Simulation):**
    - Implements core triage automation scripts simulating verifiable onchain registration and uptime diagnostics on the Solana Agent Registry for trusted international agency verification.
 
 4. **GitHub Copilot Acceleration:**
