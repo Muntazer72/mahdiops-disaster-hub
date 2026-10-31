@@ -3,57 +3,86 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Campus Lost & Found AI Portal</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>MahdiOps - Multi-Lingual Disaster Relief Hub</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-    <div class="container py-5">
-        <div class="text-center mb-5">
-            <span class="badge bg-primary mb-2 px-3 py-2">Hacktoberfest 2026 x AWS Student Builder Group BZU</span>
-            <h1 class="dashboard-title">🏫 Campus Lost & Found AI Portal</h1>
-            <p class="text-secondary">AI-powered item identification and community recovery system</p>
-        </div>
-        
-        <div class="row justify-content-center mb-5">
-            <div class="col-md-8">
-                <div class="card card-custom p-4 shadow-lg">
-                    <h4 class="mb-4 text-info">📌 Report Lost or Found Item</h4>
-                    <form action="/" method="POST" enctype="multipart/form-data">
-                        <div class="mb-3">
-                            <label class="form-label">Location Found/Lost (e.g., CS Dept, Library, Cafeteria):</label>
-                            <input type="text" name="location" class="form-control" placeholder="Enter location..." required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Upload Item Image:</label>
-                            <input type="file" name="image" class="form-control" accept="image/*" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary-custom w-100 py-2">Upload & Analyze with AI</button>
-                    </form>
-                </div>
-            </div>
-        </div>
+    <div class="container">
+        <header>
+            <h1>🌍 MahdiOps: Multi-Lingual Disaster Relief Hub</h1>
+            <p>Hacktoberfest Hack Day Multan x AWS Student Builder Group BZU | Participant: Muntazer Mahdi</p>
+        </header>
 
-        <h3 class="mb-4 text-light border-bottom pb-2">📋 Live Campus Feed</h3>
-        <div class="row">
-            {% if not items %}
-                <div class="col-12 text-center text-secondary py-4">
-                    <p>No items reported yet. Be the first to report!</p>
-                </div>
-            {% endif %}
-            
-            {% for item in items %}
-            <div class="col-md-4 mb-4">
-                <div class="card card-custom h-100 shadow-sm">
-                    <img src="{{ url_for('static', filename='uploads/' + item.image) }}" class="card-img-top item-img" alt="Item Image">
-                    <div class="card-body">
-                        <h6 class="text-warning mb-2">📍 Location: {{ item.location }}</h6>
-                        <p class="card-text text-light small"><strong>AI Insights:</strong> {{ item.details }}</p>
+        <main>
+            <!-- Triage & Image Upload Section -->
+            <section class="card">
+                <h2>🚨 Emergency Incident Triage (Google Gemma / Gemini AI)</h2>
+                <form method="POST" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="region">Select Crisis Region (Snowflake Data):</label>
+                        <select name="region" id="region">
+                            {% for reg in regions %}
+                                <option value="{{ reg.region }}">{{ reg.region }} - Status: {{ reg.infrastructure_status }}</option>
+                            {% endfor %}
+                        </select>
                     </div>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
+
+                    <div class="form-group">
+                        <label for="language">Select Response Language:</label>
+                        <select name="language" id="language">
+                            <option value="en">English</option>
+                            <option value="ur">Urdu (اردو)</option>
+                            <option value="ru">Russian (Русский)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="file">Upload Damage / Infrastructure Image:</label>
+                        <input type="file" name="file" id="file" required>
+                    </div>
+
+                    <button type="submit" class="btn">Run AI Disaster Assessment</button>
+                </form>
+
+                {% if analysis_result %}
+                    <div class="result-box">
+                        <h3>📋 Operational Summary & AI Recommendation:</h3>
+                        <p>{{ analysis_result }}</p>
+                    </div>
+                {% endif %}
+            </section>
+
+            <!-- Snowflake Infrastructure Status -->
+            <section class="card">
+                <h2>📊 Snowflake Infrastructure Mock Data Feed</h2>
+                <table>
+                    <tr>
+                        <th>Region</th>
+                        <th>Infrastructure Status</th>
+                        <th>Road Blocked</th>
+                        <th>Water Supply</th>
+                    </tr>
+                    {% for reg in regions %}
+                    <tr>
+                        <td>{{ reg.region }}</td>
+                        <td>{{ reg.infrastructure_status }}</td>
+                        <td>{{ 'Yes ❌' if reg.road_blocked else 'No ✅' }}</td>
+                        <td>{{ reg.water_supply }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </section>
+
+            <!-- Solana Agent Registry -->
+            <section class="card">
+                <h2>⚡ Solana Onchain Agent Registry</h2>
+                <ul>
+                    {% for agent in agents %}
+                        <li><strong>{{ agent.agent_id }}</strong> | Status: {{ agent.status }} | Uptime: {{ agent.uptime }} ({{ agent.network }})</li>
+                    {% endfor %}
+                </ul>
+            </section>
+        </main>
     </div>
 </body>
 </html>
